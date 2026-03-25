@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>CCST Student Portal | Login & Registration</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (free icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #eef2f8;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        /* Auth Container (Login/Register) */
+        .auth-container {
+            width: 100%;
+            max-width: 460px;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 40px;
+            padding: 32px 28px;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.25);
+            transition: transform 0.2s;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .auth-header h2 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0b2b3b, #1a6d7e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .auth-header p {
+            color: #5f7e8c;
+            margin-top: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1e3b47;
+            font-size: 0.85rem;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 28px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: 0.2s;
+            background: #fefefe;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #1a6d7e;
+            box-shadow: 0 0 0 3px rgba(26,109,126,0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(105deg, #0f3b48, #1a6d7e);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(26,109,126,0.3);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: #4a6a78;
+        }
+
+        .auth-footer span {
+            color: #1a6d7e;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .error-msg {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 12px;
+            border-radius: 28px;
+            font-size: 0.8rem;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .success-msg {
+            background: #e0f2e9;
+            color: #166534;
+            padding: 12px;
+            border-radius: 28px;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        /* MAIN PORTAL STYLES (identical to previous but enhanced) */
+        .portal-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            background: #f4f7fc;
+            display: none;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 24px 20px 40px;
+        }
+
+        .portal-header {
+            background: linear-gradient(135deg, #0b2b3b 0%, #124c5f 100%);
+            border-radius: 28px;
+            padding: 24px 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title-section h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .title-section p {
+            color: #cfe6ef;
+            margin-top: 6px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 20px;
+            border-radius: 40px;
+        }
+
+        .user-info span {
+            color: white;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.25);
+            border: none;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+        .program-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+            justify-content: center;
+        }
+
+        .program-card {
+            background: white;
+            border-radius: 28px;
+            padding: 14px 28px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+            color: #2c5a6e;
+        }
+
+        .program-card.active {
+            background: #1a6d7e;
+            color: white;
+            border-color: #ffdd99;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 26px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 20px 24px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            border: 1px solid #e9edf2;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            border-left: 6px solid #1a6d7e;
+            padding-left: 14px;
+            margin-bottom: 18px;
+            color: #0f3b48;
+        }
+
+        .result-item, .fee-item, .event-item, .notif-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #ecf3f7;
+        }
+
+        .result-grade {
+            float: right;
+            background: #eef2f5;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .gpa-box {
+            background: #eef7fa;
+            border-radius: 24px;
+            padding: 16px;
+            text-align: center;
+            margin: 12px 0;
+        }
+
+        .gpa-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #1a6d7e;
+        }
+
+        .paid { color: #1e7e34; }
+        .pending { color: #c96b0e; }
+        .overdue { color: #b91c1c; }
+
+        .badge-new {
+            background: #ffd966;
+            color: #5e3a00;
+            font-size: 0.7rem;
+            border-radius: 40px;
+            padding: 2px 8px;
+            margin-left: 12px;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #5b7a89;
+            border-top: 1px solid #dce5ec;
+            padding-top: 28px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 680px) {
+            .portal-header { flex-direction: column; align-items: start; gap: 12px; }
+            .card-title { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- AUTH SECTION (Login/Register) -->
+<div id="authSection" class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>🎓 CCST Portal</h2>
+            <p>Sign in to access results, GPA & updates</p>
+        </div>
+        <div id="authMessage"></div>
+        
+        <!-- Login Form (default visible) -->
+        <div id="loginForm">
+            <div class="input-group">
+                <label><i class="fas fa-envelope"></i> Email / Student ID</label>
+                <input type="text" id="loginEmail" placeholder="student@ccst.edu or ID" autocomplete="username">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+            </div>
+            <button class="btn-primary" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
+            <div class="auth-footer">
+                Don't have an account? <span id="showRegisterBtn">Create account</span>
+            </div>
+        </div>
+
+        <!-- Registration Form (hidden initially) -->
+        <div id="registerForm" style="display: none;">
+            <div class="input-group">
+                <label><i class="fas fa-user"></i> Full Name</label>
+                <input type="text" id="regFullName" placeholder="John Doe">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-envelope"></i> Email Address</label>
+                <input type="email" id="regEmail" placeholder="student@ccst.edu">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-graduation-cap"></i> Program</label>
+                <select id="regProgram">
+                    <option value="Nursing">🏥 Nursing</option>
+                    <option value="Midwifery">🤱 Midwifery</option>
+                    <option value="Medical Laboratory">🔬 Medical Laboratory</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="regPassword" placeholder="Create password (min 4 chars)">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-check-circle"></i> Confirm Password</label>
+                <input type="password" id="regConfirmPassword" placeholder="Confirm password">
+            </div>
+            <button class="btn-primary" id="registerBtn"><i class="fas fa-user-plus"></i> Register</button>
+            <div class="auth-footer">
+                Already have an account? <span id="showLoginBtn">Sign in</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN PORTAL (hidden until login) -->
+<div id="portalWrapper" class="portal-wrapper">
+    <div class="container">
+        <div class="portal-header">
+            <div class="title-section">
+                <h1>🎓 CCST Student Portal</h1>
+                <p>Access results, GPA, fees, events & notifications</p>
+            </div>
+            <div class="user-info">
+                <span id="portalUserName"><i class="fas fa-user-circle"></i> Student</span>
+                <span id="portalUserProgram" style="background:rgba(255,255,255,0.2); padding:4px 12px; border-radius:40px;"></span>
+                <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+
+        <div class="program-row" id="programSelector">
+            <div class="program-card" data-program="Nursing">🏥 Nursing</div>
+            <div class="program-card" data-program="Midwifery">🤱 Midwifery</div>
+            <div class="program-card" data-program="Medical Laboratory">🔬 Medical Laboratory</div>
+        </div>
+
+        <div class="dashboard">
+            <div class="card">
+                <div class="card-title">📚 Semester Results & GPA</div>
+                <div id="resultsContainer">Loading results...</div>
+                <div class="gpa-box">
+                    <span style="font-weight:500;">📈 Cumulative GPA</span>
+                    <div class="gpa-number" id="gpaValue">--</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">💰 Fee Details</div>
+                <div id="feesContainer">Loading fees...</div>
+            </div>
+            <div class="card">
+                <div class="card-title">📅 Upcoming Events</div>
+                <div id="eventsContainer">Loading events...</div>
+                <div style="margin-top: 24px;" class="card-title">🔔 Notifications</div>
+                <div id="notificationsContainer">Loading notifications...</div>
+            </div>
+        </div>
+        <div class="footer-note">
+            ⚡ Real-time data from Google Sheets backend · Secured portal
+        </div>
+    </div>
+</div>
+
+<script>
+    // ---------- LOCAL STORAGE AUTH SYSTEM (for mobile app persistence) ----------
+    // Users database stored in localStorage (simulates backend authentication)
+    // In production, this would connect to a real auth service + Google Sheets.
+    // Registration stores user data, login validates.
+    
+    const STORAGE_KEY = "ccst_portal_users";
+    const SESSION_KEY = "ccst_logged_user";
+
+    // Initialize default users if none exist (demo accounts)
+    function initUserDatabase() {
+        let users = localStorage.getItem(STORAGE_KEY);
+        if (!users) {
+            const defaultUsers = [
+                { id: "1", fullName: "Alice Johnson", email: "alice@ccst.edu", program: "Nursing", password: "nursing123" },
+                { id: "2", fullName: "Brian Smith", email: "brian@ccst.edu", program: "Midwifery", password: "midwife123" },
+                { id: "3", fullName: "Cynthia Lee", email: "cynthia@ccst.edu", program: "Medical Laboratory", password: "lab123" }
+            ];
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultUsers));
+        }
+    }
+
+    // Helper: find user by email
+    function findUserByEmail(email) {
+        const users = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        return users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    }
+
+    // Register new user
+    function registerUser(fullName, email, program, password) {
+        const users = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        if (findUserByEmail(email)) {
+            return { success: false, message: "Email already registered. Please login." };
+        }
+        if (password.length < 4) {
+            return { success: false, message: "Password must be at least 4 characters." };
+        }
+        const newUser = {
+            id: Date.now().toString(),
+            fullName: fullName.trim(),
+            email: email.trim(),
+            program: program,
+            password: password
+        };
+        users.push(newUser);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+        return { success: true, message: "Registration successful! Please login." };
+    }
+
+    // Login validation
+    function loginUser(email, password) {
+        const user = findUserByEmail(email);
+        if (!user) return { success: false, message: "User not found. Register first." };
+        if (user.password !== password) return { success: false, message: "Incorrect password." };
+        // store session
+        const session = {
+            id: user.id,
+            fullName: user.fullName,
+            email: user.email,
+            program: user.program
+        };
+        localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+        return { success: true, user: session };
+    }
+
+    function logoutUser() {
+        localStorage.removeItem(SESSION_KEY);
+    }
+
+    function getCurrentSession() {
+        const session = localStorage.getItem(SESSION_KEY);
+        if (session) return JSON.parse(session);
+        return null;
+    }
+
+    // ---------- GOOGLE SHEETS BACKEND (same as original, mock data but structured) ----------
+    const MOCK_SHEETS = {
+        results: [
+            { Program: "Nursing", Semester: "Semester 1", Course: "Anatomy", Grade: "A", Credits: 3, GPA_Val: 4.0 },
+            { Program: "Nursing", Semester: "Semester 2", Course: "Pharmacology", Grade: "A-", Credits: 4, GPA_Val: 3.7 },
+            { Program: "Midwifery", Semester: "Semester 1", Course: "Maternal Health", Grade: "A", Credits: 4, GPA_Val: 4.0 },
+            { Program: "Midwifery", Semester: "Semester 2", Course: "Clinical Practice", Grade: "A", Credits: 5, GPA_Val: 4.0 },
+            { Program: "Medical Laboratory", Semester: "Semester 1", Course: "Clinical Chemistry", Grade: "B+", Credits: 4, GPA_Val: 3.3 },
+            { Program: "Medical Laboratory", Semester: "Semester 2", Course: "Microbiology", Grade: "A", Credits: 4, GPA_Val: 4.0 }
+        ],
+        fees: [
+            { Program: "Nursing", FeeType: "Tuition", Amount: "$1,250", Status: "Paid" },
+            { Program: "Nursing", FeeType: "Lab Fees", Amount: "$180", Status: "Pending" },
+            { Program: "Midwifery", FeeType: "Tuition", Amount: "$1,200", Status: "Paid" },
+            { Program: "Midwifery", FeeType: "Clinical Materials", Amount: "$210", Status: "Overdue" },
+            { Program: "Medical Laboratory", FeeType: "Tuition", Amount: "$1,350", Status: "Paid" },
+            { Program: "Medical Laboratory", FeeType: "Equipment", Amount: "$320", Status: "Pending" }
+        ],
+        events: [
+            { Program: "Nursing", EventName: "Clinical Workshop", EventDate: "Apr 12, 2026", Description: "Simulation lab" },
+            { Program: "Midwifery", EventName: "Maternal Health Conference", EventDate: "Apr 20, 2026", Description: "Keynote" },
+            { Program: "Medical Laboratory", EventName: "Lab Safety Week", EventDate: "Apr 18, 2026", Description: "Mandatory" }
+        ],
+        notifications: [
+            { Program: "Nursing", NotificationText: "Scholarship deadline April 25", Date: "2026-03-20", Priority: "High" },
+            { Program: "Midwifery", NotificationText: "New mentorship program open", Date: "2026-03-22", Priority: "High" },
+            { Program: "Medical Laboratory", NotificationText: "ASCP prep sessions start April", Date: "2026-03-21", Priority: "High" }
+        ]
+    };
+
+    class GoogleSheetBackend {
+        static async fetchResults(program) { await new Promise(r => setTimeout(r, 60)); return MOCK_SHEETS.results.filter(r => r.Program === program); }
+        static async fetchFees(program) { await new Promise(r => setTimeout(r, 50)); return MOCK_SHEETS.fees.filter(f => f.Program === program); }
+        static async fetchEvents(program) { await new Promise(r => setTimeout(r, 50)); return MOCK_SHEETS.events.filter(e => e.Program === program); }
+        static async fetchNotifications(program) { await new Promise(r => setTimeout(r, 40)); return MOCK_SHEETS.notifications.filter(n => n.Program === program); }
+    }
+
+    function computeGPAFromResults(results) {
+        if (!results.length) return "0.00";
+        let totalPoints = 0, totalCredits = 0;
+        for (let row of results) {
+            let gradeVal = row.GPA_Val;
+            let credits = row.Credits || 3;
+            if (gradeVal && credits) { totalPoints += gradeVal * credits; totalCredits += credits; }
+        }
+        if (totalCredits === 0) return "0.00";
+        return (totalPoints / totalCredits).toFixed(2);
+    }
+
+    function renderResults(results) {
+        if (!results.length) return "<div>No results yet.</div>";
+        let html = `<div style="max-height: 220px; overflow-y: auto;">`;
+        results.forEach(r => { html += `<div class="result-item"><span class="result-sem">📘 ${r.Course}</span><span class="result-grade">${r.Grade}</span><div style="font-size:0.75rem;">${r.Semester}</div></div>`; });
+        html += `</div>`;
+        return html;
+    }
+    function renderFees(fees) {
+        if (!fees.length) return "<div>No fee records.</div>";
+        let html = ``;
+        fees.forEach(f => {
+            let statusClass = f.Status.toLowerCase();
+            html += `<div class="fee-item"><div style="display:flex; justify-content:space-between;"><strong>${f.FeeType}</strong><span>${f.Amount}</span></div><div class="fee-status ${statusClass}">● ${f.Status}</div></div>`;
+        });
+        return html;
+    }
+    function renderEvents(events) {
+        if (!events.length) return "<div>No upcoming events.</div>";
+        let html = ``;
+        events.slice(0, 4).forEach(ev => { html += `<div class="event-item"><div><strong>📌 ${ev.EventName}</strong></div><div class="event-date">📅 ${ev.EventDate}</div><div>${ev.Description}</div></div>`; });
+        return html;
+    }
+    function renderNotifications(notifications) {
+        if (!notifications.length) return "<div>No notifications</div>";
+        let html = `<div>`;
+        notifications.slice(0, 5).forEach(notif => { html += `<div class="notif-item"><div>🔔 ${notif.NotificationText} ${notif.Priority === "High" ? '<span class="badge-new">new</span>' : ''}</div><div class="event-date">${notif.Date}</div></div>`; });
+        html += `</div>`;
+        return html;
+    }
+
+    let currentProgram = "Nursing";
+
+    async function refreshDashboard() {
+        document.getElementById("resultsContainer").innerHTML = "Loading...";
+        document.getElementById("gpaValue").innerText = "--";
+        const [results, fees, events, notifications] = await Promise.all([
+            GoogleSheetBackend.fetchResults(currentProgram),
+            GoogleSheetBackend.fetchFees(currentProgram),
+            GoogleSheetBackend.fetchEvents(currentProgram),
+            GoogleSheetBackend.fetchNotifications(currentProgram)
+        ]);
+        document.getElementById("resultsContainer").innerHTML = renderResults(results);
+        document.getElementById("gpaValue").innerText = computeGPAFromResults(results);
+        document.getElementById("feesContainer").innerHTML = renderFees(fees);
+        document.getElementById("eventsContainer").innerHTML = renderEvents(events);
+        document.getElementById("notificationsContainer").innerHTML = renderNotifications(notifications);
+    }
+
+    function initPortal(userSession) {
+        document.getElementById("portalUserName").innerHTML = `<i class="fas fa-user-circle"></i> ${userSession.fullName}`;
+        document.getElementById("portalUserProgram").innerHTML = userSession.program;
+        currentProgram = userSession.program;
+        // highlight program card
+        document.querySelectorAll(".program-card").forEach(card => {
+            if (card.getAttribute("data-program") === currentProgram) card.classList.add("active");
+            else card.classList.remove("active");
+        });
+        refreshDashboard();
+        // attach program switcher
+        document.querySelectorAll(".program-card").forEach(card => {
+            card.onclick = () => {
+                const prog = card.getAttribute("data-program");
+                if (!prog) return;
+                currentProgram = prog;
+                document.querySelectorAll(".program-card").forEach(c => c.classList.remove("active"));
+                card.classList.add("active");
+                refreshDashboard();
+            };
+        });
+    }
+
+    // UI: Show/Hide Auth & Portal
+    function showAuthScreen() {
+        document.getElementById("authSection").style.display = "flex";
+        document.getElementById("portalWrapper").style.display = "none";
+    }
+    function showPortalScreen(user) {
+        document.getElementById("authSection").style.display = "none";
+        document.getElementById("portalWrapper").style.display = "block";
+        initPortal(user);
+    }
+
+    // Authentication UI logic
+    function setupAuthUI() {
+        const loginFormDiv = document.getElementById("loginForm");
+        const registerFormDiv = document.getElementById("registerForm");
+        const showRegisterBtn = document.getElementById("showRegisterBtn");
+        const showLoginBtn = document.getElementById("showLoginBtn");
+        const loginBtn = document.getElementById("loginBtn");
+        const registerBtn = document.getElementById("registerBtn");
+        const authMessageDiv = document.getElementById("authMessage");
+
+        function clearAuthMsg() { authMessageDiv.innerHTML = ""; }
+        function showMsg(msg, isError = true) { authMessageDiv.innerHTML = `<div class="${isError ? 'error-msg' : 'success-msg'}">${msg}</div>`; setTimeout(() => { if(authMessageDiv) authMessageDiv.innerHTML = ""; }, 3000); }
+
+        showRegisterBtn.onclick = () => { clearAuthMsg(); loginFormDiv.style.display = "none"; registerFormDiv.style.display = "block"; };
+        showLoginBtn.onclick = () => { clearAuthMsg(); registerFormDiv.style.display = "none"; loginFormDiv.style.display = "block"; };
+
+        loginBtn.onclick = () => {
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value;
+            if (!email || !password) { showMsg("Please fill all fields"); return; }
+            const result = loginUser(email, password);
+            if (result.success) {
+                showMsg("Login successful! Redirecting...", false);
+                setTimeout(() => { showPortalScreen(result.user); }, 800);
+            } else {
+                showMsg(result.message);
+            }
+        };
+
+        registerBtn.onclick = () => {
+            const fullName = document.getElementById("regFullName").value.trim();
+            const email = document.getElementById("regEmail").value.trim();
+            const program = document.getElementById("regProgram").value;
+            const password = document.getElementById("regPassword").value;
+            const confirm = document.getElementById("regConfirmPassword").value;
+            if (!fullName || !email || !password) { showMsg("All fields required"); return; }
+            if (password !== confirm) { showMsg("Passwords do not match"); return; }
+            const regResult = registerUser(fullName, email, program, password);
+            if (regResult.success) {
+                showMsg(regResult.message, false);
+                // switch to login form
+                registerFormDiv.style.display = "none";
+                loginFormDiv.style.display = "block";
+                document.getElementById("loginEmail").value = email;
+                document.getElementById("loginPassword").value = "";
+            } else {
+                showMsg(regResult.message);
+            }
+        };
+    }
+
+    // Logout handler
+    document.getElementById("logoutBtn")?.addEventListener("click", () => {
+        logoutUser();
+        showAuthScreen();
+        // reset forms
+        document.getElementById("loginEmail").value = "";
+        document.getElementById("loginPassword").value = "";
+        document.getElementById("authMessage").innerHTML = "";
+    });
+
+    // On Load: init DB, check session
+    initUserDatabase();
+    setupAuthUI();
+    const session = getCurrentSession();
+    if (session) {
+        showPortalScreen(session);
+    } else {
+        showAuthScreen();
+    }
+</script>
+</body>
+</html>
