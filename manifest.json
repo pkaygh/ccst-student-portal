@@ -1,7 +1,7 @@
 {
   "name": "CCST Student Portal",
   "short_name": "CCST Portal",
-  "description": "Access semester results, GPA, fees, events and notifications for Nursing, Midwifery, and Medical Laboratory students",
+  "description": "Access semester results, GPA, fees, events and notifications for Course",
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#1a6d7e",
