@@ -4,129 +4,610 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCST Portal Improved</title>
+    <title>CCST Student Portal - Result Management System</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Login & Registration Panels */
+        .auth-container {
+            display: flex;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 50px auto;
+            flex-wrap: wrap;
         }
 
         #loginPanel,
-        #mainPortal {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        #registerPanel {
+            flex: 1;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 40px;
+            min-width: 300px;
         }
 
-        #adminPanel {
-            margin-top: 20px;
-            padding: 20px;
-            background: #eef;
-            border-radius: 5px;
+        .login-header,
+        .register-header {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        input,
+        .login-header h2,
+        .register-header h2 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
         button {
-            margin: 10px 0;
-            padding: 8px;
-        }
-
-        button {
-            cursor: pointer;
-            background-color: #4CAF50;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 3px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         button:hover {
-            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
         }
 
         .error {
-            color: red;
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
         }
 
         .success {
-            color: green;
+            background: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
         }
 
-        .data-container {
-            margin-top: 20px;
-            border-top: 1px solid #ccc;
-            padding-top: 20px;
+        .info {
+            background: #e3f2fd;
+            color: #1976d2;
+            border: 1px solid #bbdef5;
+        }
+
+        /* Main Portal */
+        #mainPortal {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 30px;
+        }
+
+        .portal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .portal-header h2 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 24px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .admin-badge {
+            background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        .student-badge {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            padding: 8px 20px;
+            width: auto;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .filter-section h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+            font-size: 18px;
+        }
+
+        .filter-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .filter-controls input,
+        .filter-controls select {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .filter-controls input:focus,
+        .filter-controls select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .filter-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px 20px;
+            width: auto;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #999 0%, #666 100%);
+        }
+
+        /* Results Table */
+        .results-section {
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         th,
         td {
-            border: 1px solid #ddd;
-            padding: 8px;
+            padding: 12px;
             text-align: left;
+            border-bottom: 1px solid #e0e0e0;
         }
 
         th {
-            background-color: #f2f2f2;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+            transform: scale(1.01);
+            transition: transform 0.2s;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 16px;
+        }
+
+        /* Admin Panel */
+        #adminPanel {
+            background: linear-gradient(135deg, #fff5e6 0%, #ffe6f0 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #ff9800;
+        }
+
+        #adminPanel h3 {
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 20px;
+        }
+
+        .admin-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .admin-section h4 {
+            color: #ff9800;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: monospace;
+            resize: vertical;
+            font-size: 12px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #ff9800;
+        }
+
+        /* Statistics */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-card h4 {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        /* Grade Colors */
+        .grade-a-plus,
+        .grade-a {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .grade-b-plus,
+        .grade-b {
+            color: #2196f3;
+            font-weight: bold;
+        }
+
+        .grade-c-plus,
+        .grade-c {
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        .grade-d {
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        .grade-f {
+            color: #9e9e9e;
+            font-weight: bold;
+        }
+
+        .switch-auth {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .switch-auth a {
+            color: #667eea;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .switch-auth a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .filter-controls {
+                grid-template-columns: 1fr;
+            }
+
+            #mainPortal {
+                padding: 20px;
+            }
+
+            .portal-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .stat-card .number {
+                font-size: 24px;
+            }
+
+            .auth-container {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 
 <body>
+    <div class="container">
+        <!-- AUTHENTICATION CONTAINER (Login + Register) -->
+        <div id="authContainer" class="auth-container">
+            <!-- LOGIN PANEL -->
+            <div id="loginPanel">
+                <div class="login-header">
+                    <h2>🔐 Login to Portal</h2>
+                    <p style="color: #666;">Access your results and dashboard</p>
+                </div>
+                <div>
+                    <div class="form-group">
+                        <label>📧 Email Address</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>🔒 Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password">
+                    </div>
+                    <button onclick="login()">Login</button>
+                    <div id="loginMsg" class="message"></div>
+                    <div class="switch-auth">
+                        Don't have an account? <a onclick="showRegister()">Register here</a>
+                    </div>
+                </div>
+            </div>
 
-    <!-- LOGIN PANEL -->
-    <div id="loginPanel">
-        <h2>🔐 CCST Portal Login</h2>
-        <div>
-            <label>Email:</label><br>
-            <input type="email" id="loginEmail" placeholder="Enter your email"><br>
-            <label>Password:</label><br>
-            <input type="password" id="loginPassword" placeholder="Enter your password"><br>
-            <button onclick="login()">Login</button>
-            <p id="loginMsg"></p>
+            <!-- REGISTER PANEL (hidden by default) -->
+            <div id="registerPanel" style="display:none;">
+                <div class="register-header">
+                    <h2>📝 Create Account</h2>
+                    <p style="color: #666;">Register to access your results</p>
+                </div>
+                <div>
+                    <div class="form-group">
+                        <label>👤 Full Name</label>
+                        <input type="text" id="regName" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>📧 Email Address</label>
+                        <input type="email" id="regEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>🆓 Student ID</label>
+                        <input type="text" id="regStudentId" placeholder="Enter your student ID">
+                    </div>
+                    <div class="form-group">
+                        <label>🔒 Password</label>
+                        <input type="password" id="regPassword" placeholder="Create a password (min 6 characters)">
+                    </div>
+                    <div class="form-group">
+                        <label>🔒 Confirm Password</label>
+                        <input type="password" id="regConfirmPassword" placeholder="Confirm your password">
+                    </div>
+                    <button onclick="register()">Create Account</button>
+                    <div id="registerMsg" class="message"></div>
+                    <div class="switch-auth">
+                        Already have an account? <a onclick="showLogin()">Login here</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <!-- MAIN PORTAL (hidden by default) -->
-    <div id="mainPortal" style="display:none;">
-        <h2>📊 CCST Portal</h2>
-        <div id="userInfo"></div>
+        <!-- MAIN PORTAL -->
+        <div id="mainPortal" style="display:none;">
+            <div class="portal-header">
+                <h2>📊 Student Result Portal</h2>
+                <div class="user-info">
+                    <span id="userName" style="font-weight: 500;"></span>
+                    <span id="userBadge"></span>
+                    <button onclick="logout()" class="logout-btn">🚪 Logout</button>
+                </div>
+            </div>
 
-        <!-- ADMIN PANEL (hidden by default) -->
-        <div id="adminPanel" style="display:none; margin-top:20px; padding:20px; background:#eef; border-radius:5px;">
-            <h3>⚙️ Admin Dashboard</h3>
-            <label>Google Sheet CSV URL:</label><br>
-            <input id="sheetUrl" style="width:80%"><br><br>
-            <label>Paste CSV Data:</label><br>
-            <textarea id="csvData" rows="6" style="width:80%"></textarea><br><br>
-            <button onclick="adminUpdateData()">💾 Update Data</button>
-            <p id="adminMsg"></p>
+            <!-- ADMIN PANEL -->
+            <div id="adminPanel" style="display:none;">
+                <h3>⚙️ Admin Dashboard</h3>
+
+                <div class="admin-section">
+                    <h4>📝 Manage Users (Google Sheets)</h4>
+                    <label>Users Sheet URL:</label>
+                    <input type="text" id="usersSheetUrl" placeholder="Google Sheet CSV URL for users"
+                        style="width:100%; margin-bottom:10px; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+                    <label>Paste Users CSV Data:</label>
+                    <textarea id="usersCsvData" rows="4"
+                        placeholder="email,password_hash,name,role,student_id&#10;student1@ccst.edu,hash123,John Doe,student,STU001"></textarea>
+                    <button onclick="adminUpdateUsers()" style="margin-top:10px;">💾 Update Users Data</button>
+                </div>
+
+                <div class="admin-section">
+                    <h4>📚 Manage Results (Google Sheets)</h4>
+                    <label>Results Sheet URL:</label>
+                    <input type="text" id="resultsSheetUrl" placeholder="Google Sheet CSV URL for results"
+                        style="width:100%; margin-bottom:10px; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+                    <label>Paste Results CSV Data:</label>
+                    <textarea id="resultsCsvData" rows="4"
+                        placeholder="student_id,subject,marks,grade,semester&#10;STU001,Mathematics,85,A,1"></textarea>
+                    <button onclick="adminUpdateResults()" style="margin-top:10px;">💾 Update Results Data</button>
+                </div>
+
+                <div id="adminMsg" class="message"></div>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <h3>🔍 Filter Your Results</h3>
+                <div class="filter-controls">
+                    <input type="text" id="filterSubject" placeholder="Filter by Subject">
+                    <select id="filterSemester">
+                        <option value="">All Semesters</option>
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                    </select>
+                    <input type="text" id="filterGrade" placeholder="Filter by Grade (A+, A, B+, etc.)">
+                </div>
+                <button onclick="filterResults()" class="filter-btn">🔍 Apply Filters</button>
+                <button onclick="resetFilters()" class="filter-btn reset-btn">🔄 Reset All</button>
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats" id="statsPanel"></div>
+
+            <!-- Results Table -->
+            <div class="results-section">
+                <div id="resultsDisplay"></div>
+            </div>
         </div>
-
-        <div class="data-container">
-            <h3>📋 Portal Data</h3>
-            <button onclick="loadAllData()">🔄 Refresh Data</button>
-            <div id="dataDisplay"></div>
-        </div>
-
-        <button onclick="logout()" style="margin-top:20px;">🚪 Logout</button>
     </div>
 
     <script>
+        // ================= PASSWORD HASHING =================
+        class PasswordHasher {
+            static async hash(password) {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(password);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                return hashHex;
+            }
+
+            static async verify(password, hash) {
+                const hashedPassword = await this.hash(password);
+                return hashedPassword === hash;
+            }
+        }
+
         // ================= INDEXEDDB SETUP =================
         const DB_NAME = "ccst_portal_db";
         const STORE_NAME = "api_cache";
 
         function openDB() {
             return new Promise((resolve, reject) => {
-                const request = indexedDB.open(DB_NAME, 1);
+                const request = indexedDB.open(DB_NAME, 2);
 
                 request.onupgradeneeded = function (e) {
                     const db = e.target.result;
@@ -146,31 +627,46 @@
         }
 
         async function saveToDB(key, value) {
-            const db = await openDB();
-            const tx = db.transaction(STORE_NAME, "readwrite");
-            tx.objectStore(STORE_NAME).put(value, key);
+            try {
+                const db = await openDB();
+                const tx = db.transaction(STORE_NAME, "readwrite");
+                const store = tx.objectStore(STORE_NAME);
+                store.put(value, key);
+                return new Promise((resolve) => {
+                    tx.oncomplete = () => resolve();
+                });
+            } catch (error) {
+                console.error("Error saving to DB:", error);
+            }
         }
 
         async function getFromDB(key) {
-            const db = await openDB();
-            return new Promise((resolve) => {
-                const tx = db.transaction(STORE_NAME, "readonly");
-                const req = tx.objectStore(STORE_NAME).get(key);
-                req.onsuccess = () => resolve(req.result);
-                req.onerror = () => resolve(null);
-            });
-        }
-
-        // ================= PASSWORD HASHING =================
-        function hashPassword(password) {
-            return btoa(password);
+            try {
+                const db = await openDB();
+                return new Promise((resolve) => {
+                    const tx = db.transaction(STORE_NAME, "readonly");
+                    const store = tx.objectStore(STORE_NAME);
+                    const req = store.get(key);
+                    req.onsuccess = () => resolve(req.result);
+                    req.onerror = () => resolve(null);
+                });
+            } catch (error) {
+                console.error("Error reading from DB:", error);
+                return null;
+            }
         }
 
         // ================= GOOGLE SHEETS BACKEND =================
         class GoogleSheetBackend {
             static async fetchFromSheet(url) {
                 try {
+                    console.log("Fetching from URL:", url);
                     const response = await fetch(url);
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
                     const csv = await response.text();
                     const parsed = this.parseCSV(csv);
 
@@ -186,162 +682,538 @@
                     return parsed;
 
                 } catch (error) {
-                    console.warn("Using cached data...", error);
-
+                    console.warn("Network error, using cached data...", error);
                     const cached = await getFromDB(url);
-
-                    if (cached) {
-                        const ONE_HOUR = 60 * 60 * 1000;
-                        if (Date.now() - cached.timestamp < ONE_HOUR) {
-                            return cached.data;
-                        }
+                    if (cached && Date.now() - cached.timestamp < 3600000) {
+                        return cached.data;
                     }
-
                     return [];
                 }
             }
 
             static parseCSV(csv) {
-                const rows = csv.split("\n").map(row =>
-                    row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
-                ).filter(row => row.length > 1);
+                if (!csv || csv.trim() === "") return [];
+
+                const rows = [];
+                const lines = csv.split("\n");
+
+                for (let line of lines) {
+                    if (line.trim() === "") continue;
+
+                    const row = [];
+                    let inQuotes = false;
+                    let currentField = "";
+
+                    for (let i = 0; i < line.length; i++) {
+                        const char = line[i];
+
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        } else if (char === ',' && !inQuotes) {
+                            row.push(currentField.trim());
+                            currentField = "";
+                        } else {
+                            currentField += char;
+                        }
+                    }
+                    row.push(currentField.trim());
+                    rows.push(row);
+                }
 
                 if (rows.length === 0) return [];
 
-                const headers = rows[0].map(h => h.trim());
-
+                const headers = rows[0].map(h => h.replace(/^"|"$/g, '').trim());
                 return rows.slice(1).map(row => {
                     let obj = {};
                     headers.forEach((header, i) => {
-                        obj[header] = row[i]?.trim() || '';
+                        let value = row[i] || '';
+                        value = value.replace(/^"|"$/g, '').trim();
+                        obj[header] = value;
                     });
                     return obj;
-                }).filter(obj => Object.keys(obj).length > 0);
+                }).filter(obj => Object.keys(obj).some(key => obj[key] !== ""));
             }
         }
 
-        // ================= AUTHENTICATION =================
-        const VALID_EMAIL = "admin@ccst.edu";
-        const VALID_PASSWORD_HASH = hashPassword("admin123"); // Change this to your desired password
+        // ================= DATA STORES =================
+        let usersData = [];
+        let resultsData = [];
+        let currentUser = null;
 
-        function login() {
-            const email = document.getElementById("loginEmail").value;
+        // Default Google Sheets URLs
+        const DEFAULT_USERS_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vYourUsersSheetID/pub?output=csv";
+        const DEFAULT_RESULTS_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vYourResultsSheetID/pub?output=csv";
+
+        // Sample data for testing with 6 semesters
+        const SAMPLE_USERS = [
+            { email: "student1@ccst.edu", password_hash: "", name: "John Doe", role: "student", student_id: "STU001" },
+            { email: "student2@ccst.edu", password_hash: "", name: "Jane Smith", role: "student", student_id: "STU002" },
+            { email: "student3@ccst.edu", password_hash: "", name: "Mike Johnson", role: "student", student_id: "STU003" },
+            { email: "admin@ccst.edu", password_hash: "", name: "Admin User", role: "admin", student_id: "ADMIN001" }
+        ];
+
+        const SAMPLE_RESULTS = [
+            // Student 1 - 6 semesters
+            { student_id: "STU001", subject: "Mathematics", marks: "85", grade: "A", semester: "1" },
+            { student_id: "STU001", subject: "Physics", marks: "78", grade: "B+", semester: "1" },
+            { student_id: "STU001", subject: "Chemistry", marks: "92", grade: "A+", semester: "1" },
+            { student_id: "STU001", subject: "Data Structures", marks: "88", grade: "A", semester: "2" },
+            { student_id: "STU001", subject: "Algorithms", marks: "82", grade: "A-", semester: "2" },
+            { student_id: "STU001", subject: "Database Systems", marks: "90", grade: "A", semester: "2" },
+            { student_id: "STU001", subject: "Operating Systems", marks: "75", grade: "B", semester: "3" },
+            { student_id: "STU001", subject: "Computer Networks", marks: "79", grade: "B+", semester: "3" },
+            { student_id: "STU001", subject: "Software Engineering", marks: "85", grade: "A", semester: "3" },
+            { student_id: "STU001", subject: "Web Development", marks: "95", grade: "A+", semester: "4" },
+            { student_id: "STU001", subject: "Mobile Computing", marks: "88", grade: "A", semester: "4" },
+            { student_id: "STU001", subject: "Cloud Computing", marks: "82", grade: "A-", semester: "4" },
+            { student_id: "STU001", subject: "Machine Learning", marks: "79", grade: "B+", semester: "5" },
+            { student_id: "STU001", subject: "AI Fundamentals", marks: "84", grade: "A", semester: "5" },
+            { student_id: "STU001", subject: "Big Data Analytics", marks: "87", grade: "A", semester: "5" },
+            { student_id: "STU001", subject: "Cybersecurity", marks: "91", grade: "A+", semester: "6" },
+            { student_id: "STU001", subject: "Project Management", marks: "86", grade: "A", semester: "6" },
+            // Student 2 - 6 semesters
+            { student_id: "STU002", subject: "Mathematics", marks: "65", grade: "C", semester: "1" },
+            { student_id: "STU002", subject: "Physics", marks: "70", grade: "B-", semester: "1" },
+            { student_id: "STU002", subject: "Chemistry", marks: "68", grade: "C+", semester: "1" },
+            { student_id: "STU002", subject: "Data Structures", marks: "72", grade: "B-", semester: "2" },
+            { student_id: "STU002", subject: "Algorithms", marks: "75", grade: "B", semester: "2" },
+            { student_id: "STU002", subject: "Database Systems", marks: "78", grade: "B+", semester: "2" }
+        ];
+
+        // Initialize sample data with hashed passwords
+        async function initializeSampleData() {
+            // Hash default passwords
+            const defaultPassword = "password123";
+            const hashedPassword = await PasswordHasher.hash(defaultPassword);
+
+            SAMPLE_USERS.forEach(user => {
+                user.password_hash = hashedPassword;
+            });
+
+            usersData = [...SAMPLE_USERS];
+            resultsData = [...SAMPLE_RESULTS];
+
+            // Save to IndexedDB
+            await saveToDB("users_data", { data: usersData, timestamp: Date.now() });
+            await saveToDB("results_data", { data: resultsData, timestamp: Date.now() });
+        }
+
+        // Load data from Google Sheets or local storage
+        async function loadUsersData() {
+            const url = document.getElementById("usersSheetUrl")?.value || DEFAULT_USERS_SHEET;
+            const sheetData = await GoogleSheetBackend.fetchFromSheet(url);
+
+            if (sheetData && sheetData.length > 0) {
+                usersData = sheetData;
+                await saveToDB("users_data", { data: usersData, timestamp: Date.now() });
+            } else {
+                const cached = await getFromDB("users_data");
+                if (cached && cached.data && cached.data.length > 0) {
+                    usersData = cached.data;
+                } else if (usersData.length === 0) {
+                    await initializeSampleData();
+                }
+            }
+        }
+
+        async function loadResultsData() {
+            const url = document.getElementById("resultsSheetUrl")?.value || DEFAULT_RESULTS_SHEET;
+            const sheetData = await GoogleSheetBackend.fetchFromSheet(url);
+
+            if (sheetData && sheetData.length > 0) {
+                resultsData = sheetData;
+                await saveToDB("results_data", { data: resultsData, timestamp: Date.now() });
+            } else {
+                const cached = await getFromDB("results_data");
+                if (cached && cached.data && cached.data.length > 0) {
+                    resultsData = cached.data;
+                }
+            }
+        }
+
+        // ================= REGISTRATION =================
+        function showRegister() {
+            document.getElementById("loginPanel").style.display = "none";
+            document.getElementById("registerPanel").style.display = "block";
+            // Clear messages
+            document.getElementById("loginMsg").innerHTML = "";
+            document.getElementById("registerMsg").innerHTML = "";
+        }
+
+        function showLogin() {
+            document.getElementById("registerPanel").style.display = "none";
+            document.getElementById("loginPanel").style.display = "block";
+            // Clear messages
+            document.getElementById("loginMsg").innerHTML = "";
+            document.getElementById("registerMsg").innerHTML = "";
+        }
+
+        async function register() {
+            const name = document.getElementById("regName").value.trim();
+            const email = document.getElementById("regEmail").value.trim();
+            const studentId = document.getElementById("regStudentId").value.trim();
+            const password = document.getElementById("regPassword").value;
+            const confirmPassword = document.getElementById("regConfirmPassword").value;
+            const registerMsg = document.getElementById("registerMsg");
+
+            // Validation
+            if (!name || !email || !studentId || !password) {
+                registerMsg.className = "error";
+                registerMsg.innerHTML = "❌ Please fill all fields";
+                return;
+            }
+
+            if (password.length < 6) {
+                registerMsg.className = "error";
+                registerMsg.innerHTML = "❌ Password must be at least 6 characters long";
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                registerMsg.className = "error";
+                registerMsg.innerHTML = "❌ Passwords do not match";
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                registerMsg.className = "error";
+                registerMsg.innerHTML = "❌ Please enter a valid email address";
+                return;
+            }
+
+            // Load existing users
+            await loadUsersData();
+
+            // Check if user already exists
+            const existingUser = usersData.find(u => u.email === email);
+            if (existingUser) {
+                registerMsg.className = "error";
+                registerMsg.innerHTML = "❌ An account with this email already exists";
+                return;
+            }
+
+            // Check if student ID is already taken
+            const existingStudentId = usersData.find(u => u.student_id === studentId);
+            if (existingStudentId) {
+                registerMsg.className = "error";
+                registerMsg.innerHTML = "❌ This Student ID is already registered";
+                return;
+            }
+
+            // Hash password
+            const hashedPassword = await PasswordHasher.hash(password);
+
+            // Create new user
+            const newUser = {
+                email: email,
+                password_hash: hashedPassword,
+                name: name,
+                role: "student",
+                student_id: studentId
+            };
+
+            usersData.push(newUser);
+
+            // Save to IndexedDB
+            await saveToDB("users_data", { data: usersData, timestamp: Date.now() });
+
+            registerMsg.className = "success";
+            registerMsg.innerHTML = "✅ Registration successful! You can now login.";
+
+            // Clear form
+            document.getElementById("regName").value = "";
+            document.getElementById("regEmail").value = "";
+            document.getElementById("regStudentId").value = "";
+            document.getElementById("regPassword").value = "";
+            document.getElementById("regConfirmPassword").value = "";
+
+            // Switch to login after 2 seconds
+            setTimeout(() => {
+                showLogin();
+                registerMsg.innerHTML = "";
+            }, 2000);
+        }
+
+        // ================= AUTHENTICATION =================
+        async function login() {
+            const email = document.getElementById("loginEmail").value.trim();
             const password = document.getElementById("loginPassword").value;
             const loginMsg = document.getElementById("loginMsg");
 
-            if (email === VALID_EMAIL && hashPassword(password) === VALID_PASSWORD_HASH) {
-                loginMsg.className = "success";
-                loginMsg.innerText = "✅ Login successful!";
+            if (!email || !password) {
+                loginMsg.className = "error";
+                loginMsg.innerHTML = "❌ Please enter both email and password";
+                return;
+            }
 
-                // Hide login, show portal
-                document.getElementById("loginPanel").style.display = "none";
-                document.getElementById("mainPortal").style.display = "block";
+            // Load users data first
+            await loadUsersData();
 
-                // Show admin panel for admin user
-                if (email === "admin@ccst.edu") {
-                    document.getElementById("adminPanel").style.display = "block";
-                }
+            // Find user
+            const user = usersData.find(u => u.email === email);
 
-                // Load initial data
-                loadAllData();
+            if (!user) {
+                loginMsg.className = "error";
+                loginMsg.innerHTML = "❌ User not found. Please register first or use student1@ccst.edu / password123";
+                return;
+            }
 
-                // Save session
+            // Verify password
+            const isValid = await PasswordHasher.verify(password, user.password_hash);
+
+            if (isValid) {
+                currentUser = user;
                 sessionStorage.setItem("loggedIn", "true");
                 sessionStorage.setItem("userEmail", email);
+                sessionStorage.setItem("userRole", user.role);
+                sessionStorage.setItem("studentId", user.student_id);
+                sessionStorage.setItem("userName", user.name);
+
+                loginMsg.className = "success";
+                loginMsg.innerHTML = "✅ Login successful! Redirecting...";
+
+                setTimeout(() => {
+                    document.getElementById("authContainer").style.display = "none";
+                    document.getElementById("mainPortal").style.display = "block";
+
+                    // Show admin panel for admin users
+                    if (user.role === "admin") {
+                        document.getElementById("adminPanel").style.display = "block";
+                        document.getElementById("userBadge").innerHTML = '<span class="admin-badge">Administrator</span>';
+                    } else {
+                        document.getElementById("userBadge").innerHTML = '<span class="student-badge">Student</span>';
+                    }
+
+                    document.getElementById("userName").innerHTML = `Welcome, ${user.name}`;
+
+                    // Load results and display
+                    loadStudentResults();
+                }, 500);
             } else {
                 loginMsg.className = "error";
-                loginMsg.innerText = "❌ Invalid email or password";
+                loginMsg.innerHTML = "❌ Invalid password";
             }
         }
 
         function logout() {
             sessionStorage.clear();
-            document.getElementById("loginPanel").style.display = "block";
+            currentUser = null;
+            document.getElementById("authContainer").style.display = "flex";
             document.getElementById("mainPortal").style.display = "none";
             document.getElementById("loginEmail").value = "";
             document.getElementById("loginPassword").value = "";
+            document.getElementById("loginMsg").innerHTML = "";
+            showLogin();
         }
 
-        function checkSession() {
+        async function checkSession() {
             if (sessionStorage.getItem("loggedIn") === "true") {
-                document.getElementById("loginPanel").style.display = "none";
-                document.getElementById("mainPortal").style.display = "block";
+                const email = sessionStorage.getItem("userEmail");
+                await loadUsersData();
 
-                if (sessionStorage.getItem("userEmail") === "admin@ccst.edu") {
-                    document.getElementById("adminPanel").style.display = "block";
+                const user = usersData.find(u => u.email === email);
+                if (user) {
+                    currentUser = user;
+                    document.getElementById("authContainer").style.display = "none";
+                    document.getElementById("mainPortal").style.display = "block";
+
+                    if (user.role === "admin") {
+                        document.getElementById("adminPanel").style.display = "block";
+                        document.getElementById("userBadge").innerHTML = '<span class="admin-badge">Administrator</span>';
+                    } else {
+                        document.getElementById("userBadge").innerHTML = '<span class="student-badge">Student</span>';
+                    }
+
+                    document.getElementById("userName").innerHTML = `Welcome, ${user.name}`;
+                    loadStudentResults();
+                } else {
+                    logout();
                 }
-
-                loadAllData();
             }
         }
 
-        // ================= DATA LOADING =================
-        const SHEET_URLS = [
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vShFf9n8AEPXewltjnngnQBMcrVfAAYABqVDF5ruwcaXer8-WASFHJ0hpPxxrvdzYJBSv6AW4gy37oT/pub?gid=0&single=true&output=csv",
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vShFf9n8AEPXewltjnngnQBMcrVfAAYABqVDF5ruwcaXer8-WASFHJ0hpPxxrvdzYJBSv6AW4gy37oT/pub?gid=731468635&single=true&output=csv",
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vShFf9n8AEPXewltjnngnQBMcrVfAAYABqVDF5ruwcaXer8-WASFHJ0hpPxxrvdzYJBSv6AW4gy37oT/pub?gid=723771609&single=true&output=csv",
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vShFf9n8AEPXewltjnngnQBMcrVfAAYABqVDF5ruwcaXer8-WASFHJ0hpPxxrvdzYJBSv6AW4gy37oT/pub?gid=1945837782&single=true&output=csv"
-        ];
+        // ================= RESULTS MANAGEMENT =================
+        async function loadStudentResults() {
+            await loadResultsData();
 
-        async function loadAllData() {
-            const dataDisplay = document.getElementById("dataDisplay");
-            dataDisplay.innerHTML = "<p>Loading data...</p>";
+            const studentId = currentUser.student_id;
+            const studentResults = resultsData.filter(r => r.student_id === studentId);
 
-            let allData = [];
+            displayResults(studentResults);
+            updateStatistics(studentResults);
+        }
 
-            for (let i = 0; i < SHEET_URLS.length; i++) {
-                const data = await GoogleSheetBackend.fetchFromSheet(SHEET_URLS[i]);
-                if (data && data.length > 0) {
-                    allData.push({ sheet: i + 1, data: data });
-                }
+        function filterResults() {
+            const subject = document.getElementById("filterSubject").value.toLowerCase();
+            const semester = document.getElementById("filterSemester").value;
+            const grade = document.getElementById("filterGrade").value.toUpperCase();
+
+            let filtered = resultsData.filter(r => r.student_id === currentUser.student_id);
+
+            if (subject) {
+                filtered = filtered.filter(r => r.subject.toLowerCase().includes(subject));
+            }
+            if (semester) {
+                filtered = filtered.filter(r => r.semester === semester);
+            }
+            if (grade) {
+                filtered = filtered.filter(r => r.grade.toUpperCase() === grade);
             }
 
-            if (allData.length === 0) {
-                dataDisplay.innerHTML = "<p>No data available. Please check your sheet URLs.</p>";
+            displayResults(filtered);
+            updateStatistics(filtered);
+        }
+
+        function resetFilters() {
+            document.getElementById("filterSubject").value = "";
+            document.getElementById("filterSemester").value = "";
+            document.getElementById("filterGrade").value = "";
+            loadStudentResults();
+        }
+
+        function getGradeClass(grade) {
+            const upperGrade = grade.toUpperCase();
+            if (upperGrade === 'A+' || upperGrade === 'A') return 'grade-a-plus';
+            if (upperGrade === 'B+' || upperGrade === 'B') return 'grade-b-plus';
+            if (upperGrade === 'C+' || upperGrade === 'C') return 'grade-c-plus';
+            if (upperGrade === 'D') return 'grade-d';
+            if (upperGrade === 'F') return 'grade-f';
+            return '';
+        }
+
+        function displayResults(results) {
+            const displayDiv = document.getElementById("resultsDisplay");
+
+            if (results.length === 0) {
+                displayDiv.innerHTML = '<div class="no-results">📭 No results found for the selected filters</div>';
                 return;
             }
 
-            // Display data
-            let html = "";
-            allData.forEach(sheet => {
-                html += `<h4>Sheet ${sheet.sheet}</h4>`;
-                if (sheet.data.length > 0) {
-                    const headers = Object.keys(sheet.data[0]);
-                    html += "<table><thead><tr>";
-                    headers.forEach(header => {
-                        html += `<th>${header}</th>`;
-                    });
-                    html += "</tr></thead><tbody>";
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Marks</th>
+                            <th>Grade</th>
+                            <th>Semester</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
 
-                    sheet.data.slice(0, 10).forEach(row => { // Show first 10 rows
-                        html += "<tr>";
-                        headers.forEach(header => {
-                            html += `<td>${row[header] || ''}</td>`;
-                        });
-                        html += "</tr>";
-                    });
+            results.forEach(result => {
+                const gradeClass = getGradeClass(result.grade);
+                html += `
+                    <tr>
+                        <td>${escapeHtml(result.subject)}</td>
+                        <td>${escapeHtml(result.marks)}%</td>
+                        <td class="${gradeClass}">${escapeHtml(result.grade)}</td>
+                        <td>Semester ${escapeHtml(result.semester)}</td>
+                    </tr>
+                `;
+            });
 
-                    if (sheet.data.length > 10) {
-                        html += `<tr><td colspan="${headers.length}">... and ${sheet.data.length - 10} more rows</td></tr>`;
-                    }
+            html += `
+                    </tbody>
+                </table>
+            `;
 
-                    html += "</tbody></table><br>";
-                } else {
-                    html += "<p>No data in this sheet</p>";
+            displayDiv.innerHTML = html;
+        }
+
+        function updateStatistics(results) {
+            if (results.length === 0) {
+                document.getElementById("statsPanel").innerHTML = `
+                    <div class="stat-card">
+                        <h4>Total Subjects</h4>
+                        <div class="number">0</div>
+                    </div>
+                `;
+                return;
+            }
+
+            const totalSubjects = results.length;
+            const totalMarks = results.reduce((sum, r) => sum + parseInt(r.marks), 0);
+            const averageMarks = (totalMarks / totalSubjects).toFixed(2);
+
+            // Calculate GPA
+            const gradePoints = {
+                'A+': 4.0, 'A': 4.0, 'A-': 3.7,
+                'B+': 3.3, 'B': 3.0, 'B-': 2.7,
+                'C+': 2.3, 'C': 2.0, 'C-': 1.7,
+                'D': 1.0, 'F': 0.0
+            };
+
+            let totalPoints = 0;
+            results.forEach(r => {
+                totalPoints += gradePoints[r.grade] || 0;
+            });
+            const gpa = (totalPoints / totalSubjects).toFixed(2);
+
+            // Calculate semester-wise breakdown
+            const semesterStats = {};
+            for (let i = 1; i <= 6; i++) {
+                semesterStats[i] = { count: 0, totalMarks: 0 };
+            }
+
+            results.forEach(r => {
+                const sem = parseInt(r.semester);
+                if (semesterStats[sem]) {
+                    semesterStats[sem].count++;
+                    semesterStats[sem].totalMarks += parseInt(r.marks);
                 }
             });
 
-            dataDisplay.innerHTML = html;
+            let semesterHtml = '';
+            for (let i = 1; i <= 6; i++) {
+                if (semesterStats[i].count > 0) {
+                    const avg = (semesterStats[i].totalMarks / semesterStats[i].count).toFixed(2);
+                    semesterHtml += `
+                        <div class="stat-card">
+                            <h4>Semester ${i}</h4>
+                            <div class="number">${avg}%</div>
+                            <small>${semesterStats[i].count} subjects</small>
+                        </div>
+                    `;
+                } else if (results.length > 0) {
+                    semesterHtml += `
+                        <div class="stat-card" style="opacity: 0.6;">
+                            <h4>Semester ${i}</h4>
+                            <div class="number">N/A</div>
+                            <small>No data</small>
+                        </div>
+                    `;
+                }
+            }
+
+            document.getElementById("statsPanel").innerHTML = `
+                <div class="stat-card">
+                    <h4>Total Subjects</h4>
+                    <div class="number">${totalSubjects}</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Average Marks</h4>
+                    <div class="number">${averageMarks}%</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Overall GPA</h4>
+                    <div class="number">${gpa}</div>
+                </div>
+                ${semesterHtml}
+            `;
         }
 
-        // ================= ADMIN UPDATE =================
-        async function adminUpdateData() {
-            const url = document.getElementById("sheetUrl").value;
-            const csv = document.getElementById("csvData").value;
+        // ================= ADMIN FUNCTIONS =================
+        async function adminUpdateUsers() {
+            const url = document.getElementById("usersSheetUrl").value;
+            const csv = document.getElementById("usersCsvData").value;
             const adminMsg = document.getElementById("adminMsg");
 
             if (!url || !csv) {
-                adminMsg.innerText = "❌ Fill all fields";
+                adminMsg.innerHTML = "❌ Please fill both URL and CSV data fields";
                 adminMsg.className = "error";
                 return;
             }
@@ -349,41 +1221,85 @@
             const parsed = GoogleSheetBackend.parseCSV(csv);
 
             if (parsed.length === 0) {
-                adminMsg.innerText = "❌ Invalid CSV data";
+                adminMsg.innerHTML = "❌ Invalid CSV data";
                 adminMsg.className = "error";
                 return;
             }
 
-            await saveToDB(url, {
-                data: parsed,
-                timestamp: Date.now()
-            });
+            await saveToDB(url, { data: parsed, timestamp: Date.now() });
+            usersData = parsed;
 
-            adminMsg.innerText = "✅ Data updated successfully";
+            adminMsg.innerHTML = `✅ Users data updated successfully! ${parsed.length} users saved.`;
             adminMsg.className = "success";
 
-            // Reload data
             setTimeout(() => {
-                loadAllData();
-            }, 500);
+                adminMsg.innerHTML = "";
+            }, 3000);
         }
 
-        // ================= AUTO REFRESH =================
-        window.addEventListener("online", () => {
-            console.log("Back online. Refreshing data...");
-            if (sessionStorage.getItem("loggedIn") === "true") {
-                loadAllData();
-            }
-        });
+        async function adminUpdateResults() {
+            const url = document.getElementById("resultsSheetUrl").value;
+            const csv = document.getElementById("resultsCsvData").value;
+            const adminMsg = document.getElementById("adminMsg");
 
-        // Load data on initial page load if session exists
-        window.addEventListener("load", () => {
+            if (!url || !csv) {
+                adminMsg.innerHTML = "❌ Please fill both URL and CSV data fields";
+                adminMsg.className = "error";
+                return;
+            }
+
+            const parsed = GoogleSheetBackend.parseCSV(csv);
+
+            if (parsed.length === 0) {
+                adminMsg.innerHTML = "❌ Invalid CSV data";
+                adminMsg.className = "error";
+                return;
+            }
+
+            await saveToDB(url, { data: parsed, timestamp: Date.now() });
+            resultsData = parsed;
+
+            adminMsg.innerHTML = `✅ Results data updated successfully! ${parsed.length} results saved.`;
+            adminMsg.className = "success";
+
+            // Reload current student's results if logged in
+            if (currentUser) {
+                loadStudentResults();
+            }
+
+            setTimeout(() => {
+                adminMsg.innerHTML = "";
+            }, 3000);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ================= INITIALIZATION =================
+        window.addEventListener("load", async () => {
+            await initializeSampleData();
             checkSession();
         });
 
-        console.log("✅ Portal ready");
-    </script>
+        window.addEventListener("online", () => {
+            if (currentUser) {
+                loadStudentResults();
+                const adminMsg = document.getElementById("adminMsg");
+                if (adminMsg) {
+                    adminMsg.innerHTML = "🔄 Back online! Data refreshed.";
+                    adminMsg.className = "success";
+                    setTimeout(() => {
+                        adminMsg.innerHTML = "";
+                    }, 3000);
+                }
+            }
+        });
 
+        console.log("✅ CCST Portal Ready with Registration, 6 Semesters, and Password Hashing");
+    </script>
 </body>
 
 </html>
