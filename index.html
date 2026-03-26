@@ -352,8 +352,8 @@
     <div id="authSection" class="auth-container">
         <div class="auth-card">
             <div class="auth-header">
-                <h2>🎓 CCST Student Portal</h2>
-                <p>Sign in to access Results, GPA & updates</p>
+                <h2>🎓 CCST Portal</h2>
+                <p>Sign in to access results, GPA & updates</p>
             </div>
             <div id="authMessage"></div>
 
@@ -536,26 +536,15 @@
                 try {
                     const response = await fetch(url);
                     const csv = await response.text();
-                    const parsed = this.parseCSV(csv);
-
-                    // ✅ Save data for offline use
-                    localStorage.setItem(url, JSON.stringify(parsed));
-
-                    return parsed;
-
+                    return this.parseCSV(csv);
                 } catch (error) {
                     console.error("Error fetching from Google Sheets:", error);
-
-                    // ✅ Load from cache if offline
-                    const cached = localStorage.getItem(url);
-                    return cached ? JSON.parse(cached) : [];
+                    return [];
                 }
             }
 
             static parseCSV(csv) {
-                const rows = csv.split("\n").map(row =>
-                    row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
-                );
+                const rows = csv.split("\n").map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
                 const headers = rows[0];
 
                 return rows.slice(1).map(row => {
@@ -591,6 +580,7 @@
                 return allData.filter(row => row.Program && row.Program === program);
             }
         }
+
         function computeGPAFromResults(results) {
             if (!results.length) return "0.00";
 
@@ -767,7 +757,7 @@
     <!-- ✅ Service Worker -->
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
+            navigator.serviceWorker.register('./service-worker.js')
                 .then(reg => console.log('Service Worker registered', reg))
                 .catch(err => console.log('Service Worker failed', err));
         }
