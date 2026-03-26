@@ -1,10 +1,10 @@
 {
-  "name": "CCST Student Portal",
+  "name": "CCST Student App",
   "short_name": "CCST",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#667eea",
+  "theme_color": "#4d7c29",
   "icons": [
     {
       "src": "icon-192.png",
@@ -16,5 +16,10 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "id": "ccst_app",
+  "lang": "en",
+  "categories": [
+    "education"
   ]
 }
