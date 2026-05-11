@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#1a472a">
+    <meta name="description" content="CCST Student Portal - Central College of Science and Technology">
+    <title>CCST Student Portal | Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6b8e23;
+            --primary-light: #9acd32;
+            --primary-dark: #1a472a;
+            --secondary: #8b4513;
+            --accent: #daa520;
+            --bg-light: #f5f5dc;
+            --bg-dark: #1a1a2e;
+            --text-dark: #2f4f2f;
+            --text-light: #6b8e6b;
+            --white: #ffffff;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 71, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+        }
+
+        .logo h1 {
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .login-btn {
+            background: var(--primary-light);
+            color: var(--primary-dark) !important;
+            padding: 8px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+
+        .login-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px 50px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 14px 35px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(107, 142, 35, 0.3);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary-dark);
+            padding: 12px 35px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 40px;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 50px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px;
+            background: var(--bg-light);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .feature-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            padding: 60px 40px;
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 450px;
+            width: 90%;
+            padding: 30px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header .logo-icon {
+            margin: 0 auto 15px;
+        }
+
+        .modal-header h2 {
+            color: var(--primary-dark);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .modal-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .modal-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .toggle-form {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .toggle-form a {
+            color: var(--primary);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+        }
+
+        /* Alert */
+        .alert {
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .alert.error {
+            background: #fee2e2;
+            color: #dc2626;
+            border-left: 4px solid #dc2626;
+            display: block;
+        }
+
+        .alert.success {
+            background: #dcfce7;
+            color: #16a34a;
+            border-left: 4px solid #16a34a;
+            display: block;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 20px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .features {
+                padding: 50px 20px;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .stats-grid {
+                gap: 20px;
+            }
+            .stat-item h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <div class="logo-icon">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h1>CCST PORTAL</h1>
+    </div>
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#" class="login-btn" onclick="openLoginModal()"><i class="fas fa-sign-in-alt"></i> Login</a>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <span class="hero-badge"><i class="fas fa-star"></i> Excellence in Healthcare Education</span>
+        <h1>Welcome to <span style="color: var(--primary);">CCST</span> Student Portal</h1>
+        <p>Your gateway to academic excellence, financial management, and campus resources. Access results, register for courses, make payments, and stay connected with the college community.</p>
+        <div class="cta-buttons">
+            <a href="#" class="btn-primary" onclick="openLoginModal()"><i class="fas fa-sign-in-alt"></i> Student Login</a>
+            <a href="#" class="btn-outline" onclick="openRegisterModal()"><i class="fas fa-user-plus"></i> Register Account</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+    <h2 class="section-title">Everything You Need, All in One Place</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+            <h3>Academic Results</h3>
+            <p>View your semester results, GPA, and academic standing in real-time.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-credit-card"></i></div>
+            <h3>Financial Management</h3>
+            <p>Check fee balances, make payments, and download receipts instantly.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-check-square"></i></div>
+            <h3>Course Registration</h3>
+            <p>Register for courses online, track credits, and manage your schedule.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-file-pdf"></i></div>
+            <h3>Transcript Requests</h3>
+            <p>Request official transcripts and attestation letters online.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-bell"></i></div>
+            <h3>Real-time Notifications</h3>
+            <p>Receive important updates about academics, fees, and campus events.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-id-card"></i></div>
+            <h3>Digital ID Card</h3>
+            <p>Access your digital student ID card anytime, anywhere.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats">
+    <div class="stats-grid">
+        <div class="stat-item">
+            <h2>3+</h2>
+            <p>Professional Programs</p>
+        </div>
+        <div class="stat-item">
+            <h2>500+</h2>
+            <p>Active Students</p>
+        </div>
+        <div class="stat-item">
+            <h2>100%</h2>
+            <p>Digital Portal</p>
+        </div>
+        <div class="stat-item">
+            <h2>24/7</h2>
+            <p>Access Available</p>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="features" id="about" style="background: var(--bg-light);">
+    <h2 class="section-title">About Central College of Science and Technology</h2>
+    <div class="features-grid" style="max-width: 800px;">
+        <div class="feature-card">
+            <div class="feature-icon" style="background: var(--accent);"><i class="fas fa-map-marker-alt"></i></div>
+            <h3>Location</h3>
+            <p>Agona Swedru, Central Region, Ghana</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background: var(--secondary);"><i class="fas fa-calendar-alt"></i></div>
+            <h3>Established</h3>
+            <p>2005 - Over 20 years of excellence</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background: var(--success);"><i class="fas fa-stethoscope"></i></div>
+            <h3>Programs</h3>
+            <p>Nursing, Midwifery, Medical Laboratory Technology</p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="contact">
+    <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#" onclick="openContactModal()">Contact</a>
+        <a href="#" onclick="openLoginModal()">Student Login</a>
+        <a href="admin.html">Staff Login</a>
+    </div>
+    <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <div>
+        <p><i class="fas fa-phone"></i> +233 20 445 8182</p>
+        <p><i class="fas fa-envelope"></i> info@centralcollegegh.com</p>
+        <p><i class="fas fa-map-marker-alt"></i> Agona Swedru, Ghana</p>
+    </div>
+    <hr style="margin: 20px 0; border-color: rgba(255,255,255,0.1);">
+    <p>&copy; 2026 Central College of Science and Technology. All rights reserved.</p>
+    <p style="margin-top: 10px; font-size: 0.8rem;">Designed for Healthcare Excellence</p>
+</footer>
+
+<!-- Login/Register Modal -->
+<div class="modal" id="authModal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <div class="modal-header">
+            <div class="logo-icon" style="margin: 0 auto 15px;">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h2 id="modalTitle">Student Login</h2>
+            <p id="modalSubtitle">Access your student portal</p>
+        </div>
+
+        <div id="alertMessage" class="alert"></div>
+
+        <!-- Login Form -->
+        <div id="loginForm">
+            <div class="input-group">
+                <label><i class="fas fa-id-card"></i> Student ID</label>
+                <input type="text" id="studentId" placeholder="e.g., CCST/RM/24/001">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <button class="modal-btn" onclick="login()">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <div class="toggle-form">
+                <a onclick="showRegister()">Don't have an account? Register here</a>
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerForm" style="display: none;">
+            <div class="input-group">
+                <label><i class="fas fa-user"></i> Full Name</label>
+                <input type="text" id="regName" placeholder="Enter your full name">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-id-card"></i> Student ID</label>
+                <input type="text" id="regId" placeholder="e.g., CCST/RM/24/001">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-graduation-cap"></i> Program</label>
+                <select id="regProgram">
+                    <option value="">Select Program</option>
+                    <option value="RM">Registered Midwifery (RM)</option>
+                    <option value="RN">Registered General Nursing (RN)</option>
+                    <option value="ML">Medical Laboratory Technology (ML)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-layer-group"></i> Level</label>
+                <select id="regLevel">
+                    <option value="">Select Level</option>
+                    <option value="100">Level 100</option>
+                    <option value="200">Level 200</option>
+                    <option value="300">Level 300</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="regPassword" placeholder="Create a password">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-lock"></i> Confirm Password</label>
+                <input type="password" id="regConfirmPassword" placeholder="Confirm your password">
+            </div>
+            <button class="modal-btn" onclick="register()">
+                <i class="fas fa-user-plus"></i> Register
+            </button>
+            <div class="toggle-form">
+                <a onclick="showLogin()">Already have an account? Login here</a>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <a href="#" onclick="showForgotPassword()">Forgot Password?</a>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Modal -->
+<div class="modal" id="contactModal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeContactModal()">&times;</span>
+        <div class="modal-header">
+            <div class="logo-icon" style="margin: 0 auto 15px;">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <h2>Contact Us</h2>
+        </div>
+        <div class="input-group">
+            <label>Your Name</label>
+            <input type="text" id="contactName" placeholder="Enter your name">
+        </div>
+        <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" id="contactEmail" placeholder="Enter your email">
+        </div>
+        <div class="input-group">
+            <label>Message</label>
+            <textarea id="contactMessage" rows="4" placeholder="Type your message here..." style="width:100%; padding:12px; border-radius:12px; border:2px solid #e0e0e0;"></textarea>
+        </div>
+        <button class="modal-btn" onclick="sendContactMessage()">Send Message</button>
+    </div>
+</div>
+
+<script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxX7zrMG1_7WuFFFMgHBZbjwrPbsOM4ZIEQeY8edIUYdoL9gZstCr9OCh7zGvZzAxHD/exec";
+
+    // Modal Functions
+    function openLoginModal() {
+        document.getElementById('modalTitle').innerText = 'Student Login';
+        document.getElementById('modalSubtitle').innerText = 'Access your student portal';
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('registerForm').style.display = 'none';
+        document.getElementById('authModal').classList.add('show');
+        clearAlert();
+    }
+
+    function openRegisterModal() {
+        document.getElementById('modalTitle').innerText = 'Student Registration';
+        document.getElementById('modalSubtitle').innerText = 'Create your account';
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registerForm').style.display = 'block';
+        document.getElementById('authModal').classList.add('show');
+        clearAlert();
+    }
+
+    function showRegister() {
+        document.getElementById('modalTitle').innerText = 'Student Registration';
+        document.getElementById('modalSubtitle').innerText = 'Create your account';
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registerForm').style.display = 'block';
+        clearAlert();
+    }
+
+    function showLogin() {
+        document.getElementById('modalTitle').innerText = 'Student Login';
+        document.getElementById('modalSubtitle').innerText = 'Access your student portal';
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('registerForm').style.display = 'none';
+        clearAlert();
+    }
+
+    function closeModal() {
+        document.getElementById('authModal').classList.remove('show');
+        clearAlert();
+        // Reset forms
+        document.getElementById('loginForm').reset();
+        document.getElementById('registerForm').reset();
+    }
+
+    function openContactModal() {
+        document.getElementById('contactModal').classList.add('show');
+    }
+
+    function closeContactModal() {
+        document.getElementById('contactModal').classList.remove('show');
+    }
+
+    function showAlert(message, type) {
+        const alertDiv = document.getElementById('alertMessage');
+        alertDiv.textContent = message;
+        alertDiv.className = `alert ${type}`;
+        setTimeout(() => {
+            alertDiv.style.display = 'block';
+        }, 100);
+        setTimeout(() => {
+            alertDiv.style.display = 'none';
+        }, 5000);
+    }
+
+    function clearAlert() {
+        const alertDiv = document.getElementById('alertMessage');
+        alertDiv.style.display = 'none';
+        alertDiv.className = 'alert';
+    }
+
+    // Login Function
+    async function login() {
+        const studentId = document.getElementById('studentId').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (!studentId || !password) {
+            showAlert('Please enter Student ID and Password', 'error');
+            return;
+        }
+
+        const btn = event.target;
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+
+        try {
+            const response = await fetch(`${SCRIPT_URL}?id=${encodeURIComponent(studentId)}&password=${encodeURIComponent(password)}`);
+            const data = await response.json();
+
+            if (data.success) {
+                localStorage.setItem('userData', JSON.stringify(data));
+                localStorage.setItem('studentId', studentId);
+                showAlert('Login successful! Redirecting...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            } else if (data.error === 'STUDENT_NOT_FOUND') {
+                showAlert('Student ID not found. Please register or contact admin.', 'error');
+            } else if (data.error === 'WRONG_PASSWORD') {
+                showAlert('Incorrect password. Please try again.', 'error');
+            } else {
+                showAlert(data.message || 'Login failed. Please try again.', 'error');
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            showAlert('Network error. Please check your connection.', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    }
+
+    // Register Function
+    async function register() {
+        const name = document.getElementById('regName').value.trim();
+        const id = document.getElementById('regId').value.trim();
+        const program = document.getElementById('regProgram').value;
+        const level = document.getElementById('regLevel').value;
+        const password = document.getElementById('regPassword').value;
+        const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+        if (!name || !id || !program || !level || !password) {
+            showAlert('Please fill in all fields', 'error');
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            showAlert('Passwords do not match', 'error');
+            return;
+        }
+
+        if (password.length < 4) {
+            showAlert('Password must be at least 4 characters', 'error');
+            return;
+        }
+
+        // Validate Student ID format
+        const idPattern = /^CCST\/(RM|RN|ML)\/\d{2}\/\d{3}$/;
+        if (!idPattern.test(id)) {
+            showAlert('Invalid Student ID format. Use: CCST/RM/24/001', 'error');
+            return;
+        }
+
+        const btn = event.target;
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
+
+        try {
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'register',
+                    name: name,
+                    id: id,
+                    program: program,
+                    level: level,
+                    password: password
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showAlert('Registration successful! Please login.', 'success');
+                setTimeout(() => {
+                    showLogin();
+                    document.getElementById('studentId').value = id;
+                    document.getElementById('password').value = '';
+                }, 2000);
+            } else {
+                showAlert(data.error || 'Registration failed. Please try again.', 'error');
+            }
+        } catch (error) {
+            console.error('Registration error:', error);
+            showAlert('Network error. Please check your connection.', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    }
+
+    function showForgotPassword() {
+        showAlert('Please contact IT department at +233 20 445 8182 for password reset.', 'info');
+    }
+
+    function sendContactMessage() {
+        const name = document.getElementById('contactName').value;
+        const email = document.getElementById('contactEmail').value;
+        const message = document.getElementById('contactMessage').value;
+
+        if (!name || !email || !message) {
+            alert('Please fill all fields');
+            return;
+        }
+
+        alert('Thank you! Your message has been sent. We will get back to you soon.');
+        closeContactModal();
+        document.getElementById('contactName').value = '';
+        document.getElementById('contactEmail').value = '';
+        document.getElementById('contactMessage').value = '';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('authModal');
+        const contactModal = document.getElementById('contactModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+        if (event.target === contactModal) {
+            closeContactModal();
+        }
+    }
+
+    // Enter key support
+    document.getElementById('studentId')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') login();
+    });
+    document.getElementById('password')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') login();
+    });
+</script>
+</body>
+</html>
